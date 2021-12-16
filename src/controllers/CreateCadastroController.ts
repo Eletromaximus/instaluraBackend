@@ -13,8 +13,16 @@ export default class CreateCadastroController {
 
       const createCadastroService = new CreateCadastroService()
 
+      const verify = await createCadastroService.search(name)
+
+      if (verify !== undefined) {
+        return res.status(400).json({
+          message: 'Usuário já existe'
+        })
+      }
+
       const cadastro = await createCadastroService.execute(name, password)
-      console.log({ cadastro })
+      console.log(verify)
       res.status(200).send(cadastro)
     } catch (err) {
       const error = new CustomError('Serviço indisponível')

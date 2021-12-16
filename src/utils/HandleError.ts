@@ -1,9 +1,11 @@
 import { CustomError } from './CustomError'
-import { Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 
 export default function handleError (
   error: TypeError | CustomError,
-  res: Response
+  req: Request,
+  res: Response,
+  next: NextFunction
 ) {
   let customError = error
 

@@ -12,15 +12,16 @@ export class CreateCadastroService {
       hash.update(`${name}:${password}`)
       const result = hash.digest('hex')
 
-      const { id } = await prisma.database.create({
+      await prisma.database.create({
         data: {
           result,
-          salt
+          salt,
+          name
         }
       })
 
       return {
-        id
+        result
       }
     } catch (err) {
       console.log(err)
@@ -33,34 +34,29 @@ export class CreateCadastroService {
     }
   }
 
-  async search (name: string, password: string) {
+  async search (name: string) {
     const prisma = new PrismaClient()
-    const salt = crypto.randomBytes(16).toString('hex')
 
     try {
-      const hash = crypto.createHmac('sha512', salt)
-      hash.update(`${name}:${password}`)
-      const result = hash.digest('hex')
-
-      const resultDb = await prisma.database.findFirst({
+      const bdName = await prisma.database.findUnique({
         where: {
-          result
+          name
         }
       })
 
-      if (result === resultDb?.result) {
-        return { message: 'Essa conta já existe' }
+      if (bdName?.name === name) {
+        return new CustomError(
+          'Usuário já existe',
+          400
+        )
       }
 
       return
     } catch (err) {
-      console.log(err)
-      const error = new CustomError(
-        'Error interno',
+      return new CustomError(
+        'Erro desconhecido, tente mais tarde',
         500
       )
-
-      return error
     }
   }
 }
