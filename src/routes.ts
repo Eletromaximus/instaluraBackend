@@ -1,13 +1,20 @@
 import { Router } from 'express'
-import CreateCadastroController from './controllers/CreateCadastroController'
+import CreateUserController from './controllers/CreateUserController'
+import AutenticateUserController from './controllers/AutenticateController'
 
 const router = Router()
 
-const createCadastroController = new CreateCadastroController()
+const createUserController = new CreateUserController()
+const autenticateUserController = new AutenticateUserController()
 
 router.post(
   '/cadastro',
-  createCadastroController.handle
+  createUserController.handle
+)
+
+router.get(
+  '/auth',
+  autenticateUserController.handle
 )
 
 export default router

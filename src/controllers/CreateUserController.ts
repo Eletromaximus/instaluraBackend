@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
-import { CreateCadastroService } from '../services/CreateCadastroService'
+import { CreateUserService } from '../services/CreateUserService'
 import { CustomError } from '../utils/CustomError'
 
-export default class CreateCadastroController {
+export default class CreateUserController {
   async handle (req: Request, res: Response) {
     const { name, password } = req.body
 
@@ -11,7 +11,7 @@ export default class CreateCadastroController {
         return res.json('Invalid Request').status(400)
       }
 
-      const createCadastroService = new CreateCadastroService()
+      const createCadastroService = new CreateUserService()
 
       const verify = await createCadastroService.search(name)
 

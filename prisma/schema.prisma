@@ -12,3 +12,8 @@ model database {
   result String @unique
   salt String
 }
+
+model tokendb {
+  hash String @unique
+  token String
+}

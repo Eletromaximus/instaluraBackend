@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import { CustomError } from '../utils/CustomError'
 import crypto from 'crypto'
 
-export class CreateCadastroService {
+export class CreateUserService {
   async execute (name: string, password: string) {
     const prisma = new PrismaClient()
     const salt = crypto.randomBytes(16).toString('hex')
