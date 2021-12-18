@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import AutenticateUserService from '../services/AutenticateUserService'
+import LoginUserService from '../services/LoginUserService'
 
 export default class AutenticateUserController {
   async handle (req: Request, res: Response) {
@@ -12,12 +12,14 @@ export default class AutenticateUserController {
         })
       }
 
-      const autenticateUserService = new AutenticateUserService()
+      const loginUserService = new LoginUserService()
 
-      const verify = await autenticateUserService.search(name, password)
+      const verify = await loginUserService.search(name, password)
 
       if (verify) {
-        const auth = await autenticateUserService.auth(verify)
+        const auth = await loginUserService.auth(verify)
+
+        return res.status(200).send(auth)
       }
     } catch (error: any) {
       res.status(error.status).json(error.message)

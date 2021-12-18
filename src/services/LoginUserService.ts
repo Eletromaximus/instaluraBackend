@@ -3,17 +3,17 @@ import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
 import { CustomError } from '../utils/CustomError'
 
-export default class AutenticateUserService {
+export default class LoginUserService {
   async search (name: string, password: string) {
     const prisma = new PrismaClient()
-    // verificar se user existe
+
     const data = await prisma.database.findUnique({
       where: { name }
     })
 
     if (data === null) {
       throw new CustomError(
-        'Usuário inválido',
+        'Usuário ou Senha inválidos',
         400
       )
     }
@@ -26,7 +26,7 @@ export default class AutenticateUserService {
       return result
     }
 
-    throw new CustomError('Nome ou senha incorretos', 400)
+    throw new CustomError('Usuário ou senha incorretos', 400)
   }
 
   async auth (result: string) {
@@ -39,15 +39,30 @@ export default class AutenticateUserService {
     })
 
     if (data?.token) {
-      data.token.
+      return data?.token
     }
 
-    const token = jwt.sign({
-      payload: 'Parabéns, tá top! Continue assim'
-    }, process.env.SECRET as string, {
-      algorithm: 'ES512',
+    const token = jwt.sign({}, '78cY0034-d885-46ad-sl33-5tF9PRTcc457', {
+      subject: 'Isso! parabéns',
       expiresIn: '7d'
     })
+
+    const update = await prisma.tokendb.update({
+      where: {
+        hash: result
+      },
+      data: {
+        token
+      }
+    })
+
+    if (!update) {
+      throw new CustomError(
+        'Error interno, tente mais tarde',
+        500
+      )
+    }
+
     return token
   }
 }

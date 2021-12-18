@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { CreateUserService } from '../services/CreateUserService'
 import { CustomError } from '../utils/CustomError'
 
-export default class CreateUserController {
+export default class LoginUserController {
   async handle (req: Request, res: Response) {
     const { name, password } = req.body
 
@@ -22,7 +22,7 @@ export default class CreateUserController {
       }
 
       const cadastro = await createCadastroService.execute(name, password)
-      console.log(verify)
+
       res.status(200).send(cadastro)
     } catch (err) {
       const error = new CustomError('Serviço indisponível')
