@@ -19,9 +19,10 @@ export default class LoginUserController {
       const generateRefreshToken = new GenerateRefreshToken()
       await generateRefreshToken.execute(id)
 
-      res.status(200).json(token)
+      res.status(200).json({ token: token })
     } catch (error: any) {
-      res.status(error.status | 500).json(error.message)
+      res.status(error.status || 500)
+        .json(error.message || { message: 'Erro Interno, tente mais tarde' })
     }
   }
 }

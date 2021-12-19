@@ -21,7 +21,8 @@ export default class LoginUserController {
       return res.status(500).json('erro interno, tente mais tarde')
     } catch (err: any) {
       // const error = new CustomError('Serviço indisponível')
-      res.status(err.status | 500).send(err.message)
+      res.status(err.status || 500)
+        .send(err.message || { message: 'Erro Interno, tente mais tarde' })
     }
   }
 }
