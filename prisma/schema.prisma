@@ -1,19 +1,27 @@
-generator client {
+generator Client {
   provider = "prisma-client-js"
 }
 
-datasource db {
+datasource Db {
   provider = "postgresql"
   url      = "postgres://ahkjsiisqnjznr:9ff352b7156ccd6eaf0dd8c245774d6991d352490074fbc7dea880c9b6eb6b9d@ec2-3-228-75-39.compute-1.amazonaws.com:5432/df6v1ov0kv2ruf"
 }
 
-model database {
-  name String @unique
-  result String @unique
-  salt String
+model User {
+  id             String @id @default(uuid())
+  name           String @unique
+  hash           String
+  salt           String
+  refresh_token  RefreshToken?
+
+  @@map("users")
 }
 
-model tokendb {
-  hash String @unique
-  token String
+model RefreshToken {
+  id       String  @id @default(uuid()) 
+  expiresIn  Int
+  user     User    @relation(fields: [userId], references: [id])
+  userId   String
+
+  @@map("refresh_token")
 }

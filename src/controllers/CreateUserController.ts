@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
 import { CreateUserService } from '../services/CreateUserService'
-import { CustomError } from '../utils/CustomError'
 
 export default class LoginUserController {
   async handle (req: Request, res: Response) {
@@ -13,20 +12,16 @@ export default class LoginUserController {
 
       const createCadastroService = new CreateUserService()
 
-      const verify = await createCadastroService.search(name)
-
-      if (verify !== undefined) {
-        return res.status(400).json({
-          message: 'Usuário já existe'
-        })
-      }
-
       const cadastro = await createCadastroService.execute(name, password)
 
-      res.status(200).send(cadastro)
-    } catch (err) {
-      const error = new CustomError('Serviço indisponível')
-      return error
+      if (cadastro) {
+        return res.status(200)
+      }
+
+      return res.status(500).json('erro interno, tente mais tarde')
+    } catch (err: any) {
+      // const error = new CustomError('Serviço indisponível')
+      res.status(err.status | 500).send(err.message)
     }
   }
 }

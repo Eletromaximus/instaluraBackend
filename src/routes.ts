@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import CreateUserController from './controllers/CreateUserController'
 import LoginUserController from './controllers/LoginUserController'
+import ensureAuthenticated from './middlewares/ensureAutenticated'
 
 const router = Router()
 
@@ -12,9 +13,10 @@ router.post(
   createUserController.handle
 )
 
-router.get(
+router.post(
   '/login',
-  loginUserController.handle
+  loginUserController.handle,
+  ensureAuthenticated
 )
 
 export default router
