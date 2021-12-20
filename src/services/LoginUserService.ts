@@ -24,7 +24,7 @@ export default class LoginUserService {
 
     if (result === data.hash) {
       const token = sign({}, '78cY0034-d885-46ad-sl33-5tF9PRTcc457', {
-        subject: 'Isso! parabéns',
+        subject: data.id,
         expiresIn: '7d'
       })
 
