@@ -2,13 +2,13 @@ import { Router } from 'express'
 import CreateUserController from './controllers/CreateUserController'
 import LoginUserController from './controllers/LoginUserController'
 import ensureAuthenticated from './middlewares/ensureAutenticated'
-import GenerateAuthenticate from './provider/GenerateAuthenticate'
+import AuthUserController from './controllers/AuthUserController'
 
 const router = Router()
 
 const createUserController = new CreateUserController()
 const loginUserController = new LoginUserController()
-const generateAuthenticate = new GenerateAuthenticate()
+const authUserController = new AuthUserController()
 
 router.post(
   '/cadastro',
@@ -23,7 +23,7 @@ router.post(
 
 router.post(
   '/auth',
-  generateAuthenticate.execute
+  authUserController.handle
 )
 
 export default router

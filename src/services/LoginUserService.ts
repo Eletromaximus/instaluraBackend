@@ -23,7 +23,7 @@ export default class LoginUserService {
     const result = hash.digest('hex')
 
     if (result === data.hash) {
-      const token = sign({}, '78cY0034-d885-46ad-sl33-5tF9PRTcc457', {
+      const token = sign({}, String(process.env.KEY_TOKEN), {
         subject: data.id,
         expiresIn: '7d'
       })
