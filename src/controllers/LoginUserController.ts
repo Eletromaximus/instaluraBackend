@@ -8,7 +8,7 @@ export default class LoginUserController {
 
     try {
       if (!name || !password) {
-        res.status(400).json({
+        return res.status(400).json({
           message: 'nome e senha obrigatórios'
         })
       }
@@ -19,9 +19,9 @@ export default class LoginUserController {
       const generateRefreshToken = new GenerateRefreshToken()
       await generateRefreshToken.execute(id)
 
-      res.status(200).json({ token: token })
+      return res.status(200).json({ token: token })
     } catch (error: any) {
-      res.status(error.status || 500)
+      return res.status(error.status || 500)
         .json(error.message || { message: 'Erro Interno, tente mais tarde' })
     }
   }

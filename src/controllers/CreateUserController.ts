@@ -15,12 +15,11 @@ export default class LoginUserController {
       const cadastro = await createCadastroService.execute(name, password)
 
       if (cadastro) {
-        return res.status(200)
+        return res.status(200).json('ok')
       }
 
       return res.status(500).json('erro interno, tente mais tarde')
     } catch (err: any) {
-      // const error = new CustomError('Serviço indisponível')
       res.status(err.status || 500)
         .send(err.message || { message: 'Erro Interno, tente mais tarde' })
     }

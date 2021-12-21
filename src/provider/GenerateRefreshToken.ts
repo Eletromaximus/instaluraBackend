@@ -1,9 +1,8 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '../db'
 import dayjs from 'dayjs'
 
 class GenerateRefreshToken {
   async execute (userId: string) {
-    const prisma = new PrismaClient()
     const expiresIn = dayjs().add(7, 'day').unix()
 
     const tokenExist = await prisma.refreshToken.findFirst({

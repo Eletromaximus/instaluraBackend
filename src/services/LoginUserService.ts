@@ -1,12 +1,10 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '../db'
 import crypto from 'crypto'
 import { CustomError } from '../utils/CustomError'
 import { sign } from 'jsonwebtoken'
 
 export default class LoginUserService {
   async search (name: string, password: string) {
-    const prisma = new PrismaClient()
-
     const data = await prisma.user.findUnique({
       where: { name }
     })

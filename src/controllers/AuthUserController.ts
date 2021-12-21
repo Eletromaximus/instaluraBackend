@@ -1,10 +1,9 @@
 import { Response, Request } from 'express'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '../db'
 import { verify } from 'jsonwebtoken'
 
 export default class AuthUserController {
   async handle (req: Request, res: Response) {
-    const prisma = new PrismaClient()
     try {
       const content = req.headers.authorization
 

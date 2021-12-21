@@ -1,10 +1,9 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '../db'
 import { CustomError } from '../utils/CustomError'
 import crypto from 'crypto'
 
 export class CreateUserService {
   async execute (name: string, password: string) {
-    const prisma = new PrismaClient()
     const salt = crypto.randomBytes(16).toString('hex')
 
     const bdName = await prisma.user.findFirst({
