@@ -8,7 +8,10 @@ const app = express()
 
 app.use(express.json())
 
-app.use(cors())
+app.use(cors({
+  origin: 'https://insta-alura-git-main-maxmillianox.vercel.app/',
+  optionsSuccessStatus: 200
+}))
 
 app.use(router)
 
