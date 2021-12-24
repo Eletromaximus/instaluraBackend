@@ -12,7 +12,7 @@ app.use(express.json())
 app.use(helmet())
 
 app.use(cors({
-  origin: 'https://insta-alura-git-main-maxmillianox.vercel.app/',
+  origin: 'https://insta-alura-git-main-maxmillianox.vercel.app',
   optionsSuccessStatus: 200
 }))
 
