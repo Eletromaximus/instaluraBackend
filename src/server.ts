@@ -3,10 +3,13 @@ import router from './routes'
 import cors from 'cors'
 import 'express-async-errors'
 import handleError from './utils/HandleError'
+import helmet from 'helmet'
 
 const app = express()
 
 app.use(express.json())
+
+app.use(helmet())
 
 app.use(cors({
   origin: 'https://insta-alura-git-main-maxmillianox.vercel.app/',
