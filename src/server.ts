@@ -15,7 +15,7 @@ app.use(cors({
   origin: [
     'https://insta-alura-git-main-maxmillianox.vercel.app',
     'insta-alura-8t250iksu-maxmillianox.vercel.app',
-    'https://insta-alura.vercel.app/'
+    'https://insta-alura.vercel.app'
   ],
   optionsSuccessStatus: 200
 }))
